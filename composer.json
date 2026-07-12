@@ -10,10 +10,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "greenter/htmltopdf": "^5.3",
         "greenter/lite": "^5.3",
         "greenter/report": "^5.3",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0",
+        "luecano/numero-a-letras": "^4.1",
         "php-open-source-saver/jwt-auth": "^2.9"
     },
     "require-dev": {

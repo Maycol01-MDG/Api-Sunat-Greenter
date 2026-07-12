@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Greenter\Report\XmlUtils;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Services\SunatService;
 use App\Traits\SunatTraits;
+use Greenter\Report\XmlUtils;
 
-class InvoiceConroller extends Controller
+class NoteController extends Controller
 {
     use SunatTraits;
+
     public function send(Request $request)
     {
+
         $request->validate([
             'company' => 'required|array',
             'company.address' => 'required|array',
@@ -32,12 +34,13 @@ class InvoiceConroller extends Controller
         $this->setTotales($data);
         $this->setLegends($data);
 
+
         $sunat = new SunatService();
         $see = $sunat->getSee($company);
-        $invoice = $sunat->getInvoice($data);
+        $note = $sunat->getNote($data);
 
-        $result = $see->send($invoice);
 
+        $result = $see->send($note);
         $response['xml'] = $see->getFactory()->getLastXml();
         $response['hash'] = base64_encode(
             sha1($response['xml'], true)
@@ -46,7 +49,6 @@ class InvoiceConroller extends Controller
 
         return response()->json($response, 200);
     }
-
     public function xml(Request $request)
     {
 
@@ -71,16 +73,16 @@ class InvoiceConroller extends Controller
 
         $sunat = new SunatService();
         $see = $sunat->getSee($company);
-        $invoice = $sunat->getInvoice($data);
+        $note = $sunat->getNote($data);
 
 
-        $response['xml'] = $see->getXmlSigned($invoice);
+        $response['xml'] = $see->getXmlSigned($note);
         $response['hash'] = (new XmlUtils())->getHashSign($response['xml']);
 
         return response()->json($response, 200);
     }
 
-    public function pdf(Request $request)
+      public function pdf(Request $request)
     {
 
         $request->validate([
@@ -100,8 +102,9 @@ class InvoiceConroller extends Controller
         $this->setLegends($data);
 
         $sunat = new SunatService();
-        $invoice = $sunat->getInvoice($data);
-        $sunat->generatePdfReport($invoice);
-        return $sunat->getHtmlReport($invoice);
+        $note = $sunat->getInvoice($data);
+       // $sunat->generatePdfReport($note); // para descarga el pdf
+        return $sunat->getHtmlReport($note);
     }
+    
 }
