@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\RegisterController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CompanyController;
+use App\Http\Controllers\Api\DespatchController;
 use App\Http\Controllers\Api\InvoiceConroller;
 use App\Http\Controllers\Api\NoteController;
 
@@ -26,4 +27,9 @@ Route::post('invoices/pdf', [InvoiceConroller::class, 'pdf'])->middleware('auth:
 Route::post('notes/send', [NoteController::class, 'send'])->middleware('auth:api');
 Route::post('notes/xml', [NoteController::class, 'xml'])->middleware('auth:api');
 Route::post('notes/pdf', [NoteController::class, 'pdf'])->middleware('auth:api');
+
+//Despaches
+Route::post('despatches/send', [DespatchController::class, 'send'])->middleware('auth:api');
+Route::post('despatches/xml', [DespatchController::class, 'xml'])->middleware('auth:api');
+Route::post('despatches/pdf', [DespatchController::class, 'pdf'])->middleware('auth:api');
 

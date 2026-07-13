@@ -45,8 +45,7 @@ trait SunatTraits{
         $data['subTotal'] = $data['valorVenta'] + $data['mtoIGV'];
         $data['mtoImpVenta'] = floor($data['subTotal'] * 10) / 10;
         $data['redondeo'] = $data['mtoImpVenta'] - $data['subTotal'];
-    }
-
+    } 
     public function setLegends(&$data){
         $formater = new NumeroALetras();
 
