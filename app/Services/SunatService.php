@@ -395,7 +395,7 @@ class SunatService
             'page-width' => '21cm',
             'page-height' => '29.7cm',
         ]);
-        $report->setBinPath(env('WKHTMLTOPDF_PATH', '/usr/bin/wkhtmltopdf'));
+        $report->setBinPath(env('WKHTMLTOPDF_PATH', '/usr/local/bin/wkhtmltopdf'));
 
         $params = [
             'system' => [

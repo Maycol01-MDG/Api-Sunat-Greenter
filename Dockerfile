@@ -13,7 +13,15 @@ RUN apt-get update \
         libonig-dev \
         unzip \
         zip \
-        wkhtmltopdf \
+        wget \
+        ca-certificates \
+        fontconfig \
+        libxrender1 \
+        libxext6 \
+        libxtst6 \
+        libfreetype6 \
+        libfontconfig1 \
+        libglib2.0-0 \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" \
         bcmath \
@@ -25,6 +33,20 @@ RUN apt-get update \
         xml \
         zip \
     && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN arch="$(dpkg --print-architecture)" \
+    && if [ "$arch" = "amd64" ]; then \
+        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb"; \
+    elif [ "$arch" = "arm64" ]; then \
+        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_arm64.deb"; \
+    else \
+        echo "Unsupported architecture: $arch" >&2; exit 1; \
+    fi \
+    && wget -q "$url" -O /tmp/wkhtmltox.deb \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends /tmp/wkhtmltox.deb \
+    && rm -f /tmp/wkhtmltox.deb \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
