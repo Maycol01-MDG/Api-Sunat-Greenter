@@ -37,9 +37,9 @@ RUN apt-get update \
 
 RUN arch="$(dpkg --print-architecture)" \
     && if [ "$arch" = "amd64" ]; then \
-        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_amd64.deb"; \
+        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb"; \
     elif [ "$arch" = "arm64" ]; then \
-        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_arm64.deb"; \
+        url="https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_arm64.deb"; \
     else \
         echo "Unsupported architecture: $arch" >&2; exit 1; \
     fi \
